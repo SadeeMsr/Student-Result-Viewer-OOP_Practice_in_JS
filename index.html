@@ -11,9 +11,10 @@
     integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
   <title>OOP with JS Sample Code</title>
   <style>
-    body{
+    body {
       background-color: rgb(162, 191, 243);
     }
+
     h1 {
       font-size: 72px;
       font-weight: bolder;
@@ -27,22 +28,22 @@
 <body>
   <div class="container mt-4">
     <h1 class="display-4 text-center">
-      <i class="fas fa-user-graduate text-primary"></i> <i>Section-A <span class="text-primary">Math</span> Results</i>
+        <i class="fas fa-user-graduate text-primary"></i> <i>Section-A <span class="text-primary">Math</span> Results</i>
     </h1>
     <form id="result-form">
       <div class="form-group">
         <label for="studentName">Student Name</label>
-        <input type="text" id="studentName" class="form-control shadow-lg mb-3">
+        <input type="text" id="studentName" required class="form-control shadow-lg mb-3">
       </div>
       <div class="form-group">
         <label for="studentID">Student ID</label>
-        <input type="text" id="studentID" class="form-control shadow-lg mb-3">
+        <input type="text" id="studentID" required class="form-control shadow-lg mb-3">
       </div>
       <div class="form-group">
         <label for="marks">Marks</label>
-        <input type="text" id="marks" class="form-control shadow-lg mb-3">
+        <input type="text" id="marks" required class="form-control shadow-lg mb-3">
       </div>
-      <input type="submit" value="Add Result" class="btn btn-primary w-100 mt-4">
+      <input type="submit" value="Add Result" required class="btn btn-primary w-100 mt-4">
     </form>
     <table class="table table-striped mt-5">
       <thead>
