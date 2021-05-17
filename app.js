@@ -1,4 +1,3 @@
-
 // Main Structure Class
 class Result {
   constructor(studentName, studentID, marks) {
@@ -7,41 +6,6 @@ class Result {
     this.marks = marks;
   }
 }
-
-
-
-// Results storing related class
-class LocalStore {
-  static getResults() {
-    let results;
-    if (localStorage.getItem('results') === null) {
-      results = [];
-    } else {
-      results = JSON.parse(localStorage.getItem('results'));
-    }
-
-    return results;
-  }
-
-  static addResult(result) {
-    const results = LocalStore.getResults();
-    results.push(result);
-    localStorage.setItem('results', JSON.stringify(results));
-  }
-
-  static removeResult(studentID) {
-    const results = LocalStore.getResults();
-    results.forEach((result, index) => {
-      if (result.studentID === studentID) {
-        results.splice(index, 1);
-      }
-    });
-
-    localStorage.setItem('results', JSON.stringify(results));
-  }
-}
-
-
 
 
 // Results displaying related class
@@ -58,17 +22,17 @@ class OnScreen {
     const row = document.createElement('tr');
 
     row.innerHTML = `
-            <td>${result.studentName}</td>
-            <td>${result.studentID}</td>
-            <td>${result.marks}</td>
-            <td><a href="#" class="btn btn-danger btn-sm delete">X</a></td>
-      `;
+      <td>${result.studentName}</td>
+      <td>${result.studentID}</td>
+      <td>${result.marks}</td>
+      <td><a href="#" class="btn btn-danger btn-sm delete">X</a></td>
+    `;
 
     list.appendChild(row);
   }
 
   static deleteResult(el) {
-    if (el.classList.contains('delete')) {
+    if(el.classList.contains('delete')) {
       el.parentElement.parentElement.remove();
     }
   }
@@ -93,11 +57,54 @@ class OnScreen {
 }
 
 
+// Results storing related class
+class LocalStore {
+  static getResults() {
+    let results;
+    if(localStorage.getItem('results') === null) {
+      results = [];
+    } else {
+      results = JSON.parse(localStorage.getItem('results'));
+    }
+
+    return results;
+  }
+
+  static addResult(result) {
+    const results = LocalStore.getResults();
+    results.push(result);
+    localStorage.setItem('results', JSON.stringify(results));
+  }
+
+  
+    
+  static removeResult(studentID) {
+    const results = LocalStore.getResults();      
+    // filter(result => result.studentID !== studentID);
+    
+  
+  const BreakException = {};
+
+    try {
+      results.forEach((result, index) => {
+        if(result.studentID === studentID) {
+          results.splice(index, 1);
+          throw BreakException
+        }
+      })
+    } catch (e) {
+        if (e !== BreakException) throw e;
+    }
+    
+
+    localStorage.setItem('results', JSON.stringify(results));
+  }
+}
 
 
 
 // Event Listener for displaying results
-document.addEventListener('DOMContentLoaded', OnScreen.displayResults);
+document.addEventListener( 'DOMContentLoaded', OnScreen.displayResults );
 
 
 // Event Listener for adding a result
@@ -110,7 +117,7 @@ document.querySelector('#result-form').addEventListener('submit', (e) => {
   const marks = document.querySelector('#marks').value;
 
   // Validating here
-  if (studentName === '' || studentID === '' || marks === '') {
+  if(studentName === '' || studentID === '' || marks === '') {
     OnScreen.showAlert('Please fill in all fields', 'danger');
   } else {
     // Main OBJECT and Initiating all the functions here
@@ -134,5 +141,3 @@ document.querySelector('#result-list').addEventListener('click', (e) => {
   LocalStore.removeResult(e.target.parentElement.previousElementSibling.previousElementSibling.textContent);
   OnScreen.showAlert('Result Removed', 'success');
 });
-
-
